@@ -21,7 +21,7 @@ export function SignUp() {
     <form
       onSubmit={handleSubmit((data) => {
         console.log(data);
-        //fixa cors-fel, behöver headers! //works with chrome plugin moesif
+        //works with chrome plugin moesif //works despite error messages
         axios.post('http://localhost:3000/add', data, { headers })
         .then(function(response){
             console.log(response);
@@ -32,12 +32,11 @@ export function SignUp() {
       })}
     >
       <h1>Registrera ny användare</h1>
-      <label htmlFor="firstName">Förnamn:</label>
-      <input {...register("firstName")} />
-      <input {...register("lastName")} />
-      <input {...register("email")} />
-      <input type="password" {...register("password")} />
-      <input type="submit" />
+      <input {...register("firstName")} placeholder="Förnamn"/>
+      <input {...register("lastName")} placeholder="Efternamn" />
+      <input {...register("email")} placeholder="E-mail"/>
+      <input type="password" {...register("password")} placeholder="Önskat lösenord"/>
+      <input type="submit" value="Registrera" />
     </form>
   );
 }
