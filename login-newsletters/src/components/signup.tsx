@@ -17,11 +17,11 @@ export function SignUp() {
 };
 
   return (
-      //spara användarens inputs till ett objekt
+      //Create object from user input
     <form
       onSubmit={handleSubmit((data) => {
         console.log(data);
-        //works with chrome plugin moesif //works despite error messages
+        //Sends object to mongodb database through express server
         axios.post('http://localhost:3000/add', data, { headers })
         .then(function(response){
             console.log(response);
@@ -40,9 +40,3 @@ export function SignUp() {
     </form>
   );
 }
-
-
-
-
-
-//Användarens unika ID?
