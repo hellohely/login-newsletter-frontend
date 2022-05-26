@@ -37,8 +37,10 @@ export function SignUp() {
       <input {...register("firstName")} placeholder="Förnamn"/>
       <input {...register("lastName")} placeholder="Efternamn" />
       <input {...register("email")} placeholder="E-mail"/>
-      <input type="password" {...register("password")} placeholder="Önskat lösenord"/>
-      <input type="checkbox" {...register("newsletter")} defaultChecked/><p>Ja tack, jag vill prenumerera på nyhetsbrevet</p>
+      <input {...register("password")} type="password" placeholder="Önskat lösenord"/>
+      <br/>
+      <input {...register("newsletter")} type="checkbox" defaultChecked/><span>Ja tack, jag vill prenumerera på nyhetsbrevet</span>
+      <br/>
       <input type="submit" value="Registrera" />
     </form>
   );

@@ -25,9 +25,19 @@ export function LogIn() {
           .post("http://localhost:3000/login", data, { headers })
           .then(function (response) {
             console.log(response);
+            if (response.status === 200) {
+                return console.log("Anv inloggad");   
+            }
+                console.log("Okänt fel");
           })
           .catch(function (error) {
             console.log(error);
+            if (error.code === "ERR_BAD_REQUEST") {
+                return console.log("Felaktigt anv el lösen");
+            }
+                console.log("Okänt fel");
+                
+
           });
       })}
     >
