@@ -6,11 +6,13 @@ type FormValues = {
   lastName: string;
   email: string;
   password: string;
+  newsletter: boolean;
 };
 
 export function SignUp() {
   const { register, handleSubmit } = useForm<FormValues>();
 
+  //Headers for post call to server
   const headers = { 
       Accept: 'application/json',
     'Content-Type' : 'application/json',
@@ -36,6 +38,7 @@ export function SignUp() {
       <input {...register("lastName")} placeholder="Efternamn" />
       <input {...register("email")} placeholder="E-mail"/>
       <input type="password" {...register("password")} placeholder="Önskat lösenord"/>
+      <input type="checkbox" {...register("newsletter")} defaultChecked/><p>Ja tack, jag vill prenumerera på nyhetsbrevet</p>
       <input type="submit" value="Registrera" />
     </form>
   );
