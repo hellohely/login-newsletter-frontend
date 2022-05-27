@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import Cookies from "universal-cookie";
+import { useNavigate } from "react-router-dom";
 
 
 type FormValues = {
@@ -11,13 +12,16 @@ type FormValues = {
 export function LogIn() {
   const { register, handleSubmit } = useForm<FormValues>();
   const cookies = new Cookies();
+  const navigate = useNavigate();
+  
 
   console.log(cookies.get('userId'));
 
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
-    withCredentials: true
+    withCredentials: true,
+    credentials: "include",
   };
 
   return (
@@ -35,12 +39,14 @@ export function LogIn() {
             
             if (response.status === 200) {
                 //Server responds with user ID. Need to save user ID to cookies
-                //let kaka: any = cookies.get("kaka");
-                //console.log(kaka);
+                let kaka: any = cookies.get("kaka");
+                console.log(kaka);
                 
                 console.log(response.data);
 
-                cookies.set('userId', response.data.userId)
+                //cookies.set('userId', response.data.userId)
+
+                navigate("/userpage");
                 
                 
                 

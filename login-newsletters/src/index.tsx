@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { SignUp } from "./components/signup";
 import { LogIn } from "./components/login";
+import { UserPage } from "./components/userpage";
 
 
 
@@ -18,6 +19,7 @@ root.render(
       <Routes>
       <Route path="/" element={<SignUp />} />
       <Route path="/login" element={<LogIn />} />
+      <Route path="/userpage" element={<UserPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
