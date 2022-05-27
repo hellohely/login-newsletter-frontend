@@ -1,7 +1,7 @@
-import axios from "axios";
+//import axios from "axios";
 import { useForm } from "react-hook-form";
 import Cookies from "universal-cookie";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 
 type FormValues = {
@@ -12,56 +12,30 @@ type FormValues = {
 export function LogIn() {
   const { register, handleSubmit } = useForm<FormValues>();
   const cookies = new Cookies();
-  const navigate = useNavigate();
+
   
-
   console.log(cookies.get('userId'));
-
-  const headers = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    withCredentials: true,
-    credentials: "include",
-  };
 
   return (
     //Create object with logon credentials
     <form
-      onSubmit={handleSubmit((data) => {
-        //console.log(data);
-        //Send object to Express server
-
-        axios
-          .post("http://localhost:3000/login", data, { headers })
-          .then(function (response) {
-              //let kaka = response.headers["set-cookie"]
-            console.log(response);
-            
-            if (response.status === 200) {
-                //Server responds with user ID. Need to save user ID to cookies
-                let kaka: any = cookies.get("kaka");
-                console.log(kaka);
-                
-                console.log(response.data);
-
-                //cookies.set('userId', response.data.userId)
-
-                navigate("/userpage");
-                
-                
-                
-              return console.log("Anv inloggad");
-            }
-            console.log("Okänt fel");
-          })
-          .catch(function (error) {
-            console.log(error);
-            if (error.code === "ERR_BAD_REQUEST") {
-              return console.log("Felaktigt anv el lösen");
-            }
-            console.log("Okänt fel");
+      onSubmit={handleSubmit(async function login(data) {
+        try {
+          const response = await fetch("http://localhost:3000/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify(data),
           });
-      })}
+          console.log(response);
+          const json = await response.json();
+          console.log(json);
+        } catch (error) {
+          console.log(error);
+        }
+      })} 
+      //console.log(data);
+      //Send object to Express server
     >
       <h1>Logga in</h1>
       <input {...register("email")} placeholder="E-mail" />
