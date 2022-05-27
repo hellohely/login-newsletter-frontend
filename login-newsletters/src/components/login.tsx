@@ -12,6 +12,8 @@ export function LogIn() {
   const { register, handleSubmit } = useForm<FormValues>();
   const cookies = new Cookies();
 
+  console.log(cookies.get('userId'));
+
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -38,8 +40,7 @@ export function LogIn() {
                 
                 console.log(response.data);
 
-                cookies.set('userID', response.data.id)
-                console.log(cookies.get('userID'));
+                cookies.set('userId', response.data.userId)
                 
                 
                 
