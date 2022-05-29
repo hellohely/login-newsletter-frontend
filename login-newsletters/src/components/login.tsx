@@ -1,8 +1,6 @@
-//import axios from "axios";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
-//import { useNavigate } from "react-router-dom";
-
 
 type FormValues = {
   email: string;
@@ -12,16 +10,16 @@ type FormValues = {
 export function LogIn() {
   const { register, handleSubmit } = useForm<FormValues>();
   const cookies = new Cookies();
+  const navigate = useNavigate();
 
-  
-  console.log(cookies.get('userId'));
+  console.log(cookies.get("userId"));
 
   return (
     //Create object with logon credentials
     <form
       onSubmit={handleSubmit(async function login(data) {
         try {
-          const response = await fetch("http://localhost:3000/login", {
+          const response = await fetch("http://localhost:3000/authorization", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
@@ -33,9 +31,8 @@ export function LogIn() {
         } catch (error) {
           console.log(error);
         }
-      })} 
-      //console.log(data);
-      //Send object to Express server
+        navigate("/userpage");
+      })}
     >
       <h1>Logga in</h1>
       <input {...register("email")} placeholder="E-mail" />
