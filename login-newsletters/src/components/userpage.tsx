@@ -11,14 +11,9 @@ export function UserPage() {
   let userId = cookies.get("userId");
   let userObject = { userId: userId.toString() };
 
-  const [firstName, setFirstName] = useState("inte laddat");
+  const [firstName, setFirstName] = useState("Okänd");
   const [newsletter, setNewsletter] = useState(false);
-
-  let newsletterText = "Du prenumererar inte på nyhetsbrevet";
-
-  if (newsletter) {
-    newsletterText = "Du prenumererar på nyhetsbrevet";
-  }
+  //const [newsletterText, setNewsletterText] = useState("Du prenumererar inte på nyhetsbrevet");
 
   async function getUserData() {
     try {
@@ -38,18 +33,17 @@ export function UserPage() {
     }
   }
 
-  getUserData();
-
   function logOut() {
     cookies.remove("userId");
     navigate("/login");
     window.location.reload();
   }
 
+  getUserData();
+
   return (
     <div>
       <p>Välkommen {firstName}!</p>
-      <p>{newsletterText}</p>
       <h4>Mina inställningar:</h4>
       <form
         onSubmit={handleSubmit(async function newsletterSettings(data) {
@@ -60,12 +54,15 @@ export function UserPage() {
           console.log(newsletterPost);
 
           try {
-            const response = await fetch("http://localhost:3000/newslettersettings", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              credentials: "include",
-              body: JSON.stringify(newsletterPost),
-            });
+            const response = await fetch(
+              "http://localhost:3000/newslettersettings",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify(newsletterPost),
+              }
+            );
             console.log(response);
             const json = await response.json();
             console.log(json);
@@ -74,11 +71,10 @@ export function UserPage() {
           }
         })}
       >
-        <label>Ja, jag vill prenumerera på nyhetsbrevet</label>
-        {newsletter && (
-          <input {...register("newsletter")} type="checkbox" defaultChecked />
-        )}
-        {!newsletter && <input {...register("newsletter")} type="checkbox" />}
+        <label>Ja tack, jag vill prenumerera på nyhetsbrevet</label>
+
+        <input {...register("newsletter")} type="checkbox" defaultChecked />
+
         <br />
         <br />
         <input type="submit" value="Spara val" />
