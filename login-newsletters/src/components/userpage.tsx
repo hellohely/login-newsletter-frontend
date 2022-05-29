@@ -52,13 +52,33 @@ export function UserPage() {
       <p>{newsletterText}</p>
       <h4>Mina inställningar:</h4>
       <form
-        onSubmit={handleSubmit((data) => {
-          console.log(data);
+        onSubmit={handleSubmit(async function newsletterSettings(data) {
+          let newsletterPost = {
+            newsletter: data.newsletter.toString(),
+            userId: userId.toString(),
+          };
+          console.log(newsletterPost);
+
+          try {
+            const response = await fetch("http://localhost:3000/newslettersettings", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+              body: JSON.stringify(newsletterPost),
+            });
+            console.log(response);
+            const json = await response.json();
+            console.log(json);
+          } catch (error) {
+            console.log(error);
+          }
         })}
       >
-        <label>Jag vill prenumerera på nyhetsbrevet</label>
-        { newsletter && <input {...register("newsletter")} type="checkbox" defaultChecked />}
-        { !newsletter && <input {...register("newsletter")} type="checkbox" />}
+        <label>Ja, jag vill prenumerera på nyhetsbrevet</label>
+        {newsletter && (
+          <input {...register("newsletter")} type="checkbox" defaultChecked />
+        )}
+        {!newsletter && <input {...register("newsletter")} type="checkbox" />}
         <br />
         <br />
         <input type="submit" value="Spara val" />
